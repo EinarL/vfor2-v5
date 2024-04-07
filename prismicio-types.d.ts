@@ -33,6 +33,17 @@ interface FrettDocumentData {
   text: prismic.RichTextField;
 
   /**
+   * Image field in *Frétt*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: frett.image
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
    * Slice Zone field in *Frétt*
    *
    * - **Field Type**: Slice Zone
@@ -86,6 +97,71 @@ interface FrettDocumentData {
  */
 export type FrettDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<FrettDocumentData>, "frett", Lang>;
+
+type FrettirDocumentDataSlicesSlice = NewsItemSlice;
+
+/**
+ * Content for Fréttir documents
+ */
+interface FrettirDocumentData {
+  /**
+   * Slice Zone field in *Fréttir*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: frettir.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#slices
+   */
+  slices: prismic.SliceZone<FrettirDocumentDataSlicesSlice> /**
+   * Meta Description field in *Fréttir*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: frettir.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */;
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *Fréttir*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: frettir.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  meta_image: prismic.ImageField<never>;
+
+  /**
+   * Meta Title field in *Fréttir*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: frettir.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  meta_title: prismic.KeyTextField;
+}
+
+/**
+ * Fréttir document from Prismic
+ *
+ * - **API ID**: `frettir`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type FrettirDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<FrettirDocumentData>,
+    "frettir",
+    Lang
+  >;
 
 type FrontpageDocumentDataSlicesSlice = HeroSlice;
 
@@ -195,7 +271,13 @@ interface MenuDocumentData {
 export type MenuDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<Simplify<MenuDocumentData>, "menu", Lang>;
 
-type PageDocumentDataSlicesSlice = RichTextSlice;
+type PageDocumentDataSlicesSlice =
+  | NewsItemSlice
+  | Hero2Slice
+  | AlternateGrid2Slice
+  | CallToActionSlice
+  | CustomerLogosSlice
+  | RichTextSlice;
 
 /**
  * Content for Page documents
@@ -269,6 +351,7 @@ export type PageDocument<Lang extends string = string> =
 
 export type AllDocumentTypes =
   | FrettDocument
+  | FrettirDocument
   | FrontpageDocument
   | MenuDocument
   | PageDocument;
@@ -459,6 +542,436 @@ export type AlternateGridSlice = prismic.SharedSlice<
 >;
 
 /**
+ * Primary content in *AlternateGrid2 → Primary*
+ */
+export interface AlternateGrid2SliceDefaultPrimary {
+  /**
+   * eyebrowHeadline field in *AlternateGrid2 → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Eyebrow
+   * - **API ID Path**: alternate_grid_2.primary.eyebrowHeadline
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  eyebrowHeadline: prismic.KeyTextField;
+
+  /**
+   * title field in *AlternateGrid2 → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: alternate_grid_2.primary.title
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  title: prismic.RichTextField;
+
+  /**
+   * description field in *AlternateGrid2 → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: alternate_grid_2.primary.description
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  description: prismic.RichTextField;
+
+  /**
+   * image field in *AlternateGrid2 → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: alternate_grid_2.primary.image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  image: prismic.ImageField<never>;
+}
+
+/**
+ * Primary content in *AlternateGrid2 → Items*
+ */
+export interface AlternateGrid2SliceDefaultItem {
+  /**
+   * title field in *AlternateGrid2 → Items*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: alternate_grid_2.items[].title
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  title: prismic.RichTextField;
+
+  /**
+   * description field in *AlternateGrid2 → Items*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: alternate_grid_2.items[].description
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  description: prismic.RichTextField;
+}
+
+/**
+ * Default variation for AlternateGrid2 Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type AlternateGrid2SliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<AlternateGrid2SliceDefaultPrimary>,
+  Simplify<AlternateGrid2SliceDefaultItem>
+>;
+
+/**
+ * Primary content in *AlternateGrid2 → Primary*
+ */
+export interface AlternateGrid2SliceImageRightPrimary {
+  /**
+   * eyebrowHeadline field in *AlternateGrid2 → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Eyebrow
+   * - **API ID Path**: alternate_grid_2.primary.eyebrowHeadline
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  eyebrowHeadline: prismic.KeyTextField;
+
+  /**
+   * title field in *AlternateGrid2 → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: alternate_grid_2.primary.title
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  title: prismic.RichTextField;
+
+  /**
+   * description field in *AlternateGrid2 → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: alternate_grid_2.primary.description
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  description: prismic.RichTextField;
+
+  /**
+   * image field in *AlternateGrid2 → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: alternate_grid_2.primary.image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  image: prismic.ImageField<never>;
+}
+
+/**
+ * Primary content in *AlternateGrid2 → Items*
+ */
+export interface AlternateGrid2SliceImageRightItem {
+  /**
+   * title field in *AlternateGrid2 → Items*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: alternate_grid_2.items[].title
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  title: prismic.RichTextField;
+
+  /**
+   * description field in *AlternateGrid2 → Items*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: alternate_grid_2.items[].description
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  description: prismic.RichTextField;
+}
+
+/**
+ * Image Right variation for AlternateGrid2 Slice
+ *
+ * - **API ID**: `imageRight`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type AlternateGrid2SliceImageRight = prismic.SharedSliceVariation<
+  "imageRight",
+  Simplify<AlternateGrid2SliceImageRightPrimary>,
+  Simplify<AlternateGrid2SliceImageRightItem>
+>;
+
+/**
+ * Slice variation for *AlternateGrid2*
+ */
+type AlternateGrid2SliceVariation =
+  | AlternateGrid2SliceDefault
+  | AlternateGrid2SliceImageRight;
+
+/**
+ * AlternateGrid2 Shared Slice
+ *
+ * - **API ID**: `alternate_grid_2`
+ * - **Description**: AlternateGrid
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type AlternateGrid2Slice = prismic.SharedSlice<
+  "alternate_grid_2",
+  AlternateGrid2SliceVariation
+>;
+
+/**
+ * Primary content in *CallToAction → Primary*
+ */
+export interface CallToActionSliceDefaultPrimary {
+  /**
+   * Image field in *CallToAction → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: call_to_action.primary.image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
+   * title field in *CallToAction → Primary*
+   *
+   * - **Field Type**: Title
+   * - **Placeholder**: *None*
+   * - **API ID Path**: call_to_action.primary.title
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  title: prismic.TitleField;
+
+  /**
+   * paragraph field in *CallToAction → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: call_to_action.primary.paragraph
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  paragraph: prismic.RichTextField;
+
+  /**
+   * buttonLink field in *CallToAction → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Redirect URL for CTA button
+   * - **API ID Path**: call_to_action.primary.buttonLink
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  buttonLink: prismic.LinkField;
+
+  /**
+   * buttonLabel field in *CallToAction → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Label for CTA button
+   * - **API ID Path**: call_to_action.primary.buttonLabel
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  buttonLabel: prismic.KeyTextField;
+}
+
+/**
+ * Default variation for CallToAction Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type CallToActionSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<CallToActionSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Primary content in *CallToAction → Primary*
+ */
+export interface CallToActionSliceAlignLeftPrimary {
+  /**
+   * Image field in *CallToAction → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: call_to_action.primary.image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
+   * title field in *CallToAction → Primary*
+   *
+   * - **Field Type**: Title
+   * - **Placeholder**: *None*
+   * - **API ID Path**: call_to_action.primary.title
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  title: prismic.TitleField;
+
+  /**
+   * paragraph field in *CallToAction → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: call_to_action.primary.paragraph
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  paragraph: prismic.RichTextField;
+
+  /**
+   * buttonLink field in *CallToAction → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Redirect URL for CTA button
+   * - **API ID Path**: call_to_action.primary.buttonLink
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  buttonLink: prismic.LinkField;
+
+  /**
+   * buttonLabel field in *CallToAction → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Label for CTA button
+   * - **API ID Path**: call_to_action.primary.buttonLabel
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  buttonLabel: prismic.KeyTextField;
+}
+
+/**
+ * AlignLeft variation for CallToAction Slice
+ *
+ * - **API ID**: `alignLeft`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type CallToActionSliceAlignLeft = prismic.SharedSliceVariation<
+  "alignLeft",
+  Simplify<CallToActionSliceAlignLeftPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *CallToAction*
+ */
+type CallToActionSliceVariation =
+  | CallToActionSliceDefault
+  | CallToActionSliceAlignLeft;
+
+/**
+ * CallToAction Shared Slice
+ *
+ * - **API ID**: `call_to_action`
+ * - **Description**: CallToAction
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type CallToActionSlice = prismic.SharedSlice<
+  "call_to_action",
+  CallToActionSliceVariation
+>;
+
+/**
+ * Primary content in *CustomerLogos → Primary*
+ */
+export interface CustomerLogosSliceDefaultPrimary {
+  /**
+   * eyebrowHeadline field in *CustomerLogos → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: customer_logos.primary.eyebrowHeadline
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  eyebrowHeadline: prismic.RichTextField;
+
+  /**
+   * callToActionLabel field in *CustomerLogos → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: customer_logos.primary.callToActionLabel
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  callToActionLabel: prismic.KeyTextField;
+
+  /**
+   * callToActionLink field in *CustomerLogos → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: customer_logos.primary.callToActionLink
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  callToActionLink: prismic.LinkField;
+}
+
+/**
+ * Primary content in *CustomerLogos → Items*
+ */
+export interface CustomerLogosSliceDefaultItem {
+  /**
+   * image field in *CustomerLogos → Items*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: customer_logos.items[].image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
+   * link field in *CustomerLogos → Items*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: customer_logos.items[].link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  link: prismic.LinkField;
+}
+
+/**
+ * Default variation for CustomerLogos Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type CustomerLogosSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<CustomerLogosSliceDefaultPrimary>,
+  Simplify<CustomerLogosSliceDefaultItem>
+>;
+
+/**
+ * Slice variation for *CustomerLogos*
+ */
+type CustomerLogosSliceVariation = CustomerLogosSliceDefault;
+
+/**
+ * CustomerLogos Shared Slice
+ *
+ * - **API ID**: `customer_logos`
+ * - **Description**: CustomerLogos
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type CustomerLogosSlice = prismic.SharedSlice<
+  "customer_logos",
+  CustomerLogosSliceVariation
+>;
+
+/**
  * Primary content in *Hero → Primary*
  */
 export interface HeroSliceDefaultPrimary {
@@ -629,6 +1142,251 @@ type HeroSliceVariation = HeroSliceDefault | HeroSliceImageRight;
 export type HeroSlice = prismic.SharedSlice<"hero", HeroSliceVariation>;
 
 /**
+ * Primary content in *Hero2 → Primary*
+ */
+export interface Hero2SliceDefaultPrimary {
+  /**
+   * eyebrowHeadline field in *Hero2 → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Eyebrow
+   * - **API ID Path**: hero_2.primary.eyebrowHeadline
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  eyebrowHeadline: prismic.KeyTextField;
+
+  /**
+   * title field in *Hero2 → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero_2.primary.title
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  title: prismic.RichTextField;
+
+  /**
+   * description field in *Hero2 → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero_2.primary.description
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  description: prismic.RichTextField;
+
+  /**
+   * image field in *Hero2 → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero_2.primary.image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
+   * callToActionLabel field in *Hero2 → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero_2.primary.callToActionLabel
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  callToActionLabel: prismic.KeyTextField;
+
+  /**
+   * callToActionLink field in *Hero2 → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero_2.primary.callToActionLink
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  callToActionLink: prismic.LinkField;
+}
+
+/**
+ * Default variation for Hero2 Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type Hero2SliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<Hero2SliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Primary content in *Hero2 → Primary*
+ */
+export interface Hero2SliceImageRightPrimary {
+  /**
+   * eyebrowHeadline field in *Hero2 → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Eyebrow
+   * - **API ID Path**: hero_2.primary.eyebrowHeadline
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  eyebrowHeadline: prismic.KeyTextField;
+
+  /**
+   * title field in *Hero2 → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero_2.primary.title
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  title: prismic.RichTextField;
+
+  /**
+   * description field in *Hero2 → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero_2.primary.description
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  description: prismic.RichTextField;
+
+  /**
+   * image field in *Hero2 → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero_2.primary.image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
+   * callToActionLabel field in *Hero2 → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero_2.primary.callToActionLabel
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  callToActionLabel: prismic.KeyTextField;
+
+  /**
+   * callToActionLink field in *Hero2 → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero_2.primary.callToActionLink
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  callToActionLink: prismic.LinkField;
+}
+
+/**
+ * Image Right variation for Hero2 Slice
+ *
+ * - **API ID**: `imageRight`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type Hero2SliceImageRight = prismic.SharedSliceVariation<
+  "imageRight",
+  Simplify<Hero2SliceImageRightPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Hero2*
+ */
+type Hero2SliceVariation = Hero2SliceDefault | Hero2SliceImageRight;
+
+/**
+ * Hero2 Shared Slice
+ *
+ * - **API ID**: `hero_2`
+ * - **Description**: Hero
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type Hero2Slice = prismic.SharedSlice<"hero_2", Hero2SliceVariation>;
+
+/**
+ * Primary content in *NewsItem → Primary*
+ */
+export interface NewsItemSliceDefaultPrimary {
+  /**
+   * Title field in *NewsItem → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: news_item.primary.title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Image field in *NewsItem → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: news_item.primary.image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
+   * text field in *NewsItem → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: news_item.primary.text
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  text: prismic.RichTextField;
+
+  /**
+   * date field in *NewsItem → Primary*
+   *
+   * - **Field Type**: Timestamp
+   * - **Placeholder**: *None*
+   * - **API ID Path**: news_item.primary.date
+   * - **Documentation**: https://prismic.io/docs/field#timestamp
+   */
+  date: prismic.TimestampField;
+}
+
+/**
+ * Default variation for NewsItem Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type NewsItemSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<NewsItemSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *NewsItem*
+ */
+type NewsItemSliceVariation = NewsItemSliceDefault;
+
+/**
+ * NewsItem Shared Slice
+ *
+ * - **API ID**: `news_item`
+ * - **Description**: NewsItem
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type NewsItemSlice = prismic.SharedSlice<
+  "news_item",
+  NewsItemSliceVariation
+>;
+
+/**
  * Primary content in *RichText → Primary*
  */
 export interface RichTextSliceDefaultPrimary {
@@ -686,6 +1444,9 @@ declare module "@prismicio/client" {
       FrettDocument,
       FrettDocumentData,
       FrettDocumentDataSlicesSlice,
+      FrettirDocument,
+      FrettirDocumentData,
+      FrettirDocumentDataSlicesSlice,
       FrontpageDocument,
       FrontpageDocumentData,
       FrontpageDocumentDataSlicesSlice,
@@ -704,12 +1465,41 @@ declare module "@prismicio/client" {
       AlternateGridSliceVariation,
       AlternateGridSliceDefault,
       AlternateGridSliceImageRight,
+      AlternateGrid2Slice,
+      AlternateGrid2SliceDefaultPrimary,
+      AlternateGrid2SliceDefaultItem,
+      AlternateGrid2SliceImageRightPrimary,
+      AlternateGrid2SliceImageRightItem,
+      AlternateGrid2SliceVariation,
+      AlternateGrid2SliceDefault,
+      AlternateGrid2SliceImageRight,
+      CallToActionSlice,
+      CallToActionSliceDefaultPrimary,
+      CallToActionSliceAlignLeftPrimary,
+      CallToActionSliceVariation,
+      CallToActionSliceDefault,
+      CallToActionSliceAlignLeft,
+      CustomerLogosSlice,
+      CustomerLogosSliceDefaultPrimary,
+      CustomerLogosSliceDefaultItem,
+      CustomerLogosSliceVariation,
+      CustomerLogosSliceDefault,
       HeroSlice,
       HeroSliceDefaultPrimary,
       HeroSliceImageRightPrimary,
       HeroSliceVariation,
       HeroSliceDefault,
       HeroSliceImageRight,
+      Hero2Slice,
+      Hero2SliceDefaultPrimary,
+      Hero2SliceImageRightPrimary,
+      Hero2SliceVariation,
+      Hero2SliceDefault,
+      Hero2SliceImageRight,
+      NewsItemSlice,
+      NewsItemSliceDefaultPrimary,
+      NewsItemSliceVariation,
+      NewsItemSliceDefault,
       RichTextSlice,
       RichTextSliceDefaultPrimary,
       RichTextSliceVariation,

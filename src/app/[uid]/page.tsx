@@ -6,6 +6,7 @@ import * as prismic from "@prismicio/client";
 
 import { createClient } from "@/prismicio";
 import { components } from "@/slices";
+import styles from "../../public/news.module.scss";
 
 type Params = { uid: string };
 
@@ -43,7 +44,11 @@ export default async function Page({ params }: { params: Params }) {
     .getByUID("page", params.uid)
     .catch(() => notFound());
 
-  return <SliceZone slices={page.data.slices} components={components} />;
+  return (
+    <div className={`${styles.container}`}>
+      <SliceZone slices={page.data.slices} components={components} />
+    </div>
+);
 }
 
 export async function generateStaticParams() {

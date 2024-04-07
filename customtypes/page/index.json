@@ -27,6 +27,21 @@
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
+            "news_item": {
+              "type": "SharedSlice"
+            },
+            "hero_2": {
+              "type": "SharedSlice"
+            },
+            "alternate_grid_2": {
+              "type": "SharedSlice"
+            },
+            "call_to_action": {
+              "type": "SharedSlice"
+            },
+            "customer_logos": {
+              "type": "SharedSlice"
+            },
             "rich_text": {
               "type": "SharedSlice"
             }

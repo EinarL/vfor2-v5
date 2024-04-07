@@ -1,50 +1,17 @@
 {
   "format": "page",
-  "id": "frett",
-  "label": "Frétt",
-  "repeatable": true,
+  "id": "frettir",
+  "label": "Fréttir",
+  "repeatable": false,
   "status": true,
   "json": {
     "Main": {
-      "uid": {
-        "config": {
-          "label": "UID"
-        },
-        "type": "UID"
-      },
-      "title": {
-        "type": "Text",
-        "config": {
-          "label": "Title",
-          "placeholder": ""
-        }
-      },
-      "text": {
-        "type": "StructuredText",
-        "config": {
-          "label": "Text",
-          "placeholder": "",
-          "allowTargetBlank": true,
-          "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
-        }
-      },
-      "image": {
-        "type": "Image",
-        "config": {
-          "label": "Image",
-          "constraint": {},
-          "thumbnails": []
-        }
-      },
       "slices": {
         "type": "Slices",
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
-            "alternate_grid": {
-              "type": "SharedSlice"
-            },
-            "rich_text": {
+            "news_item": {
               "type": "SharedSlice"
             }
           }

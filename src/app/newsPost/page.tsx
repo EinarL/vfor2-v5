@@ -5,11 +5,18 @@ import Image from 'next/image';
 import styles from "../../public/newsPost.module.scss";
 import { Suspense } from "react";
 
+export default function Home(){
+  return (
+    <Suspense>
+        <NewsDetailsPage/>
+    </Suspense>
+);
+}
+
 const NewsDetailsPage = () => {
   const searchParams = useSearchParams();
 
   return (
-    <Suspense>
       <div className={`${styles.news_container}`}>
         <h1 className={`${styles.news_title}`}>{searchParams.get('title')}</h1>
         <p className={`${styles.news_author}`}>{searchParams.get('author')} skrifar</p>
@@ -17,11 +24,8 @@ const NewsDetailsPage = () => {
         <Image className={`${styles.news_image}`} src={searchParams.get('img') as string} alt="news image" width={300} height={200}/>
         <p className={`${styles.news_text}`}>{searchParams.get('text')}</p>
       </div>
-    </Suspense>
   );
 };
-
-export default NewsDetailsPage;
 
 
 function convertTimestamp(timestamp: string): string {

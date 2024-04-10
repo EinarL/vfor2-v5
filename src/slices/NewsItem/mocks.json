@@ -46,6 +46,11 @@
 				"__TYPE__": "FieldContent",
 				"type": "Timestamp",
 				"value": "2019-01-14T20:34:32Z"
+			},
+			"author": {
+				"__TYPE__": "FieldContent",
+				"value": "took",
+				"type": "Text"
 			}
 		},
 		"items": []

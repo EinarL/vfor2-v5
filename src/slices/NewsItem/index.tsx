@@ -29,14 +29,14 @@ interface Paragraph {
 const NewsItem = ({ slice }: NewsItemProps): JSX.Element => {
   const router = useRouter();
 
-  const truncatedTitle = truncateText(slice.primary.title as string, 40);
+  const truncatedTitle = truncateText(slice.primary.title as string, 50);
 
   let text = "";
   slice.primary.text.forEach(element => {
     text = text.concat("\n\n",(element as Paragraph).text)
   });
 
-  const truncatedNewsText = truncateText(text, 62);
+  const truncatedNewsText = truncateText(text, 55);
 
     // Function to handle the click event with additional parameters
     const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
@@ -44,7 +44,9 @@ const NewsItem = ({ slice }: NewsItemProps): JSX.Element => {
       const additionalParams = {
         title: slice.primary.title as string,
         img: slice.primary.image.url ? slice.primary.image.url : "",
-        text: text
+        text: text,
+        date: slice.primary.date as string,
+        author: slice.primary.author as string
       };
       const queryString = new URLSearchParams(additionalParams).toString();
       // Navigate to the news post page with additional parameters

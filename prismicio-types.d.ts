@@ -1354,6 +1354,16 @@ export interface NewsItemSliceDefaultPrimary {
    * - **Documentation**: https://prismic.io/docs/field#timestamp
    */
   date: prismic.TimestampField;
+
+  /**
+   * Author field in *NewsItem → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: news_item.primary.author
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  author: prismic.KeyTextField;
 }
 
 /**

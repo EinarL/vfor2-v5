@@ -10,10 +10,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body >
+    <html lang="en">    
+      <body >   
         <Navbar/>
-        <main className={`${styles.main}`}>
+        <main className={styles.main}>
           {children}
         </main>
       </body>

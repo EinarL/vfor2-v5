@@ -42,6 +42,13 @@
             "label": "date",
             "placeholder": ""
           }
+        },
+        "author": {
+          "type": "Text",
+          "config": {
+            "label": "Author",
+            "placeholder": ""
+          }
         }
       },
       "items": {}
